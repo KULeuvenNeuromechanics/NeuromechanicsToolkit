@@ -10,7 +10,9 @@ function rot = SelectRotationMatrix(labname)
 % Outputs:
 % rot is a struct containing the field Markers and ForcePlate which are the
 % rotation matrices for the respective data.
-
+% 
+% If transformation for your lab are missing. Please ad an elseif branch
+% with the correct rotatations.
 
 rot = struct();
 if strcmp(labname,'overground_MALL')
