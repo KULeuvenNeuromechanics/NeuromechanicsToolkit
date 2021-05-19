@@ -19,5 +19,5 @@ This repository is build to organically grow as people contribute to the reposit
 
 1. Create your own branch in which you will add your contribution.
 2. For new functions use the function template (FunctionTemplate.m). Make sure you describe the different step you take by comments in your new function.
-3. Finished with your contribution? Make a pull request to the main branch and ask for reviewing of Bram or Wouter. 
+3. Finished with your contribution? Make a pull request to the main branch and ask for reviewing by Bram or Wouter. 
 
