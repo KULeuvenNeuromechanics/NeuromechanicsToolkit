@@ -2,7 +2,7 @@
 
 In this repository you will find a broad range of functions used at the Computational Neuromechanics research group at the KU Leuven.
 
-Function are divided in broad categories in the main folder after which they will be further divided in consequent folders. 
+Function are divided in categories in the main folder after which they will be further divided in consequent folders. 
 
 Current categories:
 
