@@ -13,5 +13,11 @@ Current categories:
 
 In each subfolder folder you will find a README.md file with a description of the files in the respective folder.
 
-This repository is build to organically grow as people contribute to the repository over time. If you contribute to the repository, please follow the function template (FunctionTemplate.m) when adding new functions to the repository.
+### Rules for contributing to the NeuromechnicsToolkit
+
+This repository is build to organically grow as people contribute to the repository over time. If you contribute to the repository, please follow the guideline below. This way we can keep the repository clean and easy to use.
+
+1. Create your own branch in which you will add you contribution.
+2. For new functions use the function template (FunctionTemplate.m). Make sure you describe the different step you take by comments in your new function.
+3. Finished with your contribution? Make a pull request and ask for reviewing of Bram or Wouter. 
 
