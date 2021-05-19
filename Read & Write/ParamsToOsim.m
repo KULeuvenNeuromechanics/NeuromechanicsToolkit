@@ -1,5 +1,6 @@
-function ParamsToOsim(muscleParams,muscleNames,modelPath)
-% ParamsToOsim
+function ParamsToOsim(muscleParams,muscleNames,modelPath,outPath,newModelFile)
+%---------------------------------------------------------------------------
+%ParamsToOsim
 %   This function writes muscle parameters to a new osim model, based on a
 %   given model.
 %
@@ -17,15 +18,22 @@ function ParamsToOsim(muscleParams,muscleNames,modelPath)
 %
 %   -modelPath-
 %   * path to the original model file
+%
+%   -outPath-
+%   * output file path
+% 
+%   -newModelFile- 
+%   * name of the new osim model
 % 
 % OUTPUT:
-%   * new osim model with the specified parameters. Model is saved at the
-%   same location as the original osim model under the name 'newParams';
-%   i.e. the original model will not be overwritten.
+%   * new osim model based on loaded model, saved in the specified folder
 %
 % Original author: Bram Van Den Bosch
 % Original date: 12/05/2021
-
+%
+% Last edit by: Bram Van Den Bosch
+% Last edit date: 18/05/2021
+%---------------------------------------------------------------------------
 
 import org.opensim.modeling.* % import OpenSim libraries
 
@@ -34,15 +42,13 @@ lMo    = muscleParams.lMo;
 lTs    = muscleParams.lTs;
 alphao = muscleParams.alphao;
 
-listing = dir(modelPath);
+listing       = dir(modelPath);
 modelFilePath = listing.folder;
 modelFile     = listing.name;
-newModelFile = 'newParams.osim'; % name of the new osim model, you can change this as you like 
 
 % load the original model and initialize
 model = Model(fullfile(modelFilePath, modelFile));
 model.initSystem();
-
 
 muscles  = model.getMuscles(); % get the muscles of the original model
 nMuscles = length(muscleNames); % count the muscles with new parameters
@@ -61,7 +67,7 @@ for i = 1:nMuscles
 end
  
 % save the new model to an osim file
-model.print(fullfile(modelFilePath, newModelFile));
+model.print(fullfile(outPath, newModelFile));
 
 end
 
