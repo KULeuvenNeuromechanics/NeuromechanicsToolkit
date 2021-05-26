@@ -12,7 +12,6 @@ function writeGRFsToMOT(forces1,forces2,cop1,cop2,Ty1,Ty2,FrameRate,outputfilena
 % ASeth, 09-07
 % WMuijres, 05-21 clean up:
 %   - erase commented code
-%   - uncomplicate code at some points
 %   - integrate with existing write .mot function of Tim Dorn
 
 % In case of nan values set to 0
@@ -51,7 +50,7 @@ colnames{19} = 'L_ground_torque_z';
 [nRowst,~]      = size(forces1); % number of samples in force vectors
 
 % Write time array to data matrix.
-time = (0:1/FrameRate:((nRowst-1)/FrameRate))';
+time = 0:1/FrameRate:((nRowst-1)/FrameRate)]';
 forceData   = [Forces1(:,1) Forces1(:,2) Forces1(:,3) cop1(:,1) cop1(:,2) cop1(:,3)  Forces2(:,1) Forces2(:,2) Forces2(:,3) cop2(:,1) cop2(:,2) cop2(:,3) zeros(nRowst,1) Ty1 zeros(nRowst,1)  zeros(nRowst,1) Ty2 zeros(nRowst,1) ];
 dataMatrix  = [time forceData];
 

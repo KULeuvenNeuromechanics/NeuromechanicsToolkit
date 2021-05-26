@@ -105,7 +105,8 @@ for i=1:nFP
         Frot(ind,j)     = 0;
         Trot(ind,j)     = 0;
     end
-
+    
+    % save outputs as struct
     ForcesPlateData(i).Forces   = Frot;
     ForcesPlateData(i).COP      = COProt;
     ForcesPlateData(i).Moments  = Trot;
