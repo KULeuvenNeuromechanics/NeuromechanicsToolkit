@@ -1,4 +1,4 @@
-function [ForcesPlateData] = Process_GRF_v2(AnalogSignals,threshold,grf_filter,AnalogFrameRate,ParameterGroup,RotationMatrix)
+function [ForcePlateData] = Process_GRF_v2(AnalogSignals,threshold,grf_filter,AnalogFrameRate,ParameterGroup,RotationMatrix)
 
 % --------------------------------------------------------------------------
 % Process_GRF
@@ -51,7 +51,7 @@ nFP = length(f);                                        % get number of FP
 nFR=length(AnalogSignals(:,1));
 
 % Initialize output variables
-ForcesPlateData = struct();
+ForcePlateData = struct();
 
 % loop over number of force plates
 for i=1:nFP
@@ -107,9 +107,10 @@ for i=1:nFP
     end
     
     % save outputs as struct
-    ForcesPlateData(i).Forces   = Frot;
-    ForcesPlateData(i).COP      = COProt;
-    ForcesPlateData(i).Moments  = Trot;
+    ForcePlateData.Data(i).Forces   = Frot;
+    ForcePlateData.Data(i).COP      = COProt;
+    ForcePlateData.Data(i).Moments  = Trot;
 end
 
+ForcePlateData.SampleFrequency = AnalogFrameRate;
 end
