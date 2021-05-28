@@ -22,8 +22,6 @@ function MarkersFilled = FillGapsMarkers(MarkersRaw,VideoFrameRate,gaplim)
 % Original date: 28-05
 %   - Gapfill limit inspired on the VU toolbox
 % --------------------------------------------------------------------------
-
-% Interpolate missing data
 % flagging markers invisible during the whole trial
 InvisibleMarkers_flag = sum(isnan(MarkersRaw)) == size(MarkersRaw,1);
 % Find columns in which data is missing
@@ -39,8 +37,8 @@ if sum(RowsMissingData) ~= 0
     for i = 1:length(index_column)
         
         % find gaps in data
-        gap_log = isnan(MarkersRaw(:,index_column(i))); % missing markers
-        d_gap   = diff(gap_log); % point at which markers are missing
+        gap_log     = isnan(MarkersRaw(:,index_column(i))); % missing markers
+        d_gap       = diff(gap_log); % point at which markers are missing
         i_disappear = find(d_gap == 1)+1; % point at which markers disappear
         i_appear    = find(d_gap == -1); % point at which markers appear
         
@@ -48,7 +46,7 @@ if sum(RowsMissingData) ~= 0
         nvisible_markers    = sum(~gap_log);
         if ~InvisibleMarkers_flag(index_column(i)) && (nvisible_markers > 1)
             % Indeces of data points that are complete
-            i_data_complete = ~isnan(MarkersRaw(:,index_column(i)));
+            i_data_complete = ~gap_log;
             % Complete data points
             data_complete = MarkersRaw(i_data_complete,index_column(i));
             % Time at data points not missing
@@ -61,11 +59,18 @@ if sum(RowsMissingData) ~= 0
             continue
         end
         
+        % Correction for empty vectors
+        if isempty(i_disappear) && ~isempty(i_appear)
+            i_disappear(1:length(i_disappear)+1)    = [1;i_disappear];
+        elseif isempty(i_appear) && ~isempty(i_disappear)
+            i_appear(1:length(i_appear)+1)          = [i_appear;nrow];
+        end
+        
         % correct for data that is missing at the start or end of the trial
-        if isempty(i_disappear) || i_appear(1)<i_disappear(1) 
+        if i_appear(1)<i_disappear(1) 
             i_disappear(1:length(i_disappear)+1)    = [1;i_disappear];
         end
-        if isempty(i_appear)|| i_appear(end)<i_disappear(end) 
+        if i_appear(end)<i_disappear(end) 
             i_appear(1:length(i_appear)+1)          = [i_appear;nrow];
         end    
         
