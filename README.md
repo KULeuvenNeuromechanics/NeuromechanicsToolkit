@@ -13,7 +13,7 @@ Current categories:
 
 In each subfolder you will find a README.md file with a description of the files in the respective folder.
 
-### Rules for contributing to the NeuromechnicsToolkit
+### Rules for contributing to the NeuromechanicsToolkit
 
 This repository is build to organically grow as people contribute to the repository over time. If you contribute to the repository, please follow the guidelines below. This way we can keep the repository clean and easy to use.
 
