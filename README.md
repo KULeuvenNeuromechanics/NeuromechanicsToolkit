@@ -11,7 +11,7 @@ Current categories:
 - Read&Write
   - Functions that read and write data, including function that read .c3d files, write .trc, .mot, .sto files, and more.
 
-In each subfolder you will find a README.md file with a description of the files in the respective folder.
+In each subfolder you will find a README.md file with a description of the files in the respective folder. (**to do**)
 
 ### Rules for contributing to the NeuromechanicsToolkit
 

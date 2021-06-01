@@ -1,11 +1,40 @@
 function err = writeMarkersToTRC(trcfile, Markers, MLabels, Rate, Frames, Time, Units)
-% Write 3D Markers trajectories (real or virtual) to a .trc file                        
-% USAGE: error = writeMarkersToTRC(trcFile, Markers, MLabels, Rate, Frames, Time, Units)
+% --------------------------------------------------------------------------
+%writeMarkersToTRC 
+%   Write 3D Markers trajectories (real or virtual) to a .trc file
+% 
+% INPUT:
+%   trcFile
+%       File name to which to which the data will be written.
+%  
+%   Markers
+%       Marker data as obtained
 %
-% ASeth 10-07 
-% Stanford University
-
-
+%   MLabels
+%       Marker labels
+%  
+%   Rate
+%       Video frame rate
+%
+%   Frames
+%       Vector with indeces of the frames
+%  
+%   Time
+%       Time vector
+%
+%   Units
+%       Measurement units of the marker data
+% 
+% OUTPUT:
+%   err
+%   	Variable that logs errors when writing the script
+% 
+% Original author: A. Seth (Stanford University)
+% Original date: 01/10/07
+%
+% Last edit by: Wouter Muijres 
+% Last edit date: 01/06/2021
+% --------------------------------------------------------------------------
 err = 0;
 [nvF, nc] = size(Markers);
 nM = length(MLabels);
@@ -35,10 +64,8 @@ end
 % Assemble Marker data for writing out to .trc file
 data = [vFrms vTime Markers];
 
-
 % Generate the header for the .trc file
 fid = fopen(trcfile, 'wt');
-
 
 fprintf(fid, 'PathFileType\t4\t(X/Y/Z)\t%s\n', trcfile);
 fprintf(fid, 'DataRate\tCameraRate\tNumFrames\tNumMarkers\tUnits\tOrigDataRate\tOrigDataStartFrame\tOrigNumFrames\n');

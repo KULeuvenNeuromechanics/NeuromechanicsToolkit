@@ -1,7 +1,4 @@
 function writeGRFsToMOT(forces1,forces2,cop1,cop2,Ty1,Ty2,FrameRate,outputfilename)
-% Purpose:  Write ground reaction forces applied at COP to a 
-%           motion file (fname) for input into the SimTrack
-%           workflow.
 %
 % Input:   GRFTz is a structure containing the following data
 %          tStart is the starting time of the data set
@@ -9,11 +6,53 @@ function writeGRFsToMOT(forces1,forces2,cop1,cop2,Ty1,Ty2,FrameRate,outputfilena
 %          fname is the name of the file to be written.
 %
 % Output:   The file 'fname' is written to the current directory.
-% ASeth, 09-07
-% WMuijres, 05-21 clean up:
+% ASeth, 01/09/07
+% WMuijres, 28/05/21 clean up:
 %   - erase commented code
 %   - uncomplicate code at some points
 %   - integrate with existing write .mot function of Tim Dorn
+
+% --------------------------------------------------------------------------
+%FUNCTIONNAME 
+%   Write ground reaction forces applied at COP to a motion file (fname) 
+%   for input into the SimTrack workflow.
+% 
+% INPUT:
+%   forces1
+%       nx3 ground reaction force data for the right leg
+%
+%   forces2
+%       nx3 ground reaction force data for the left leg
+%
+%   cop1
+%        nx3 center of pressure data for the right leg
+%
+%   cop2
+%        nx3 center of pressure data for the left leg
+%
+%   Ty1
+%       torque vector arround the y axis for the right leg
+%
+%   Ty2
+%       torque vector arround the y axis for the left leg
+% 
+%   FrameRate
+%       sampling frequency forces
+%  
+%   outputfilename
+%       directory and name to which the .mot files is stored
+%
+% OUTPUT:
+%   []
+%       The file 'outputfilename' is written to the current directory.
+%
+% Original author: ??
+% Original date: DD/MM/YYYY
+%
+% Last edit by: Wouter Muijres 
+% Last edit date: 01/06/2021
+% --------------------------------------------------------------------------
+
 
 % In case of nan values set to 0
 forces1(isnan(forces1)) = 0;

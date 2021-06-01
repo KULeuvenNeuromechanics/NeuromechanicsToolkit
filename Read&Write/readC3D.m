@@ -1,21 +1,36 @@
 function [Markers,MLabels,VideoFrameRate,AnalogSignals,ALabels,AUnits,AnalogFrameRate,Event,ParameterGroup,CameraInfo]=...
     readC3D(FullFileName, varargin)
-% ReadC3D:	Read 3D video coordinate and analog (FP) data from a C3D file
-%
-% Input:             FullFileName - file (including path) to be read
-%       (optional)   force number of markers
-%       (optional)   subtractAnalogOffset - indices of columns (in order of ALabels)
-% Output:
-% Markers            3D-marker data [NvideoFrames x Nmarkers*Ndim(=3)]
-% MLabels            marker column identifiers
-% VideoFrameRate     Frames/sec
-% AnalogSignals      Analog signals [Nsignals x NanalogSamples ]
-% ALabels            anolog column (signal) idenitifiers
-% AnalogFrameRate    Samples/sec
-% Event              Event(Nevents).time ..value  ..name
-% ParameterGroup     ParameterGroup(Ngroups).Parameters(Nparameters).data ..etc.
-% CameraInfo         MarkerRelated CameraInfo [Nmarkers x NvideoFrames]
-% ResidualError      MarkerRelated ErrorInfo  [Nmarkers x NvideoFrames]
+% --------------------------------------------------------------------------
+%ReadC3D 
+%   Read 3D video coordinate and analog (FP) data from a C3D file
+% 
+% INPUT:
+%       FullFileName 
+%           file (including path) to be read
+%       subtractAnalogOffset 
+%           indices of columns (in order of ALabels) (optional)
+% 
+% OUTPUT:
+%       Markers            
+%           3D-marker data [NvideoFrames x Nmarkers*Ndim(=3)]
+%       MLabels
+%           marker column identifiers
+%       VideoFrameRate
+%           Frames/sec
+%       AnalogSignals      
+%           Analog signals [Nsignals x NanalogSamples ]
+%       ALabels            
+%           anolog column (signal) idenitifiers
+%       AnalogFrameRate    
+%           Samples/sec
+%       Event              
+%           Event(Nevents).time ..value  ..name
+%       ParameterGroup     
+%           ParameterGroup(Ngroups).Parameters(Nparameters).data ..etc.
+%       CameraInfo         
+%           MarkerRelated CameraInfo [Nmarkers x NvideoFrames]
+%       ResidualError      
+%           MarkerRelated ErrorInfo  [Nmarkers x NvideoFrames]
 %
 % AUTHOR(S) AND VERSION-HISTORY
 % Ver. 1.0 Creation (Alan Morris, Toronto, October 1998) [originally named "getc3d.m"]
