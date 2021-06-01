@@ -21,9 +21,9 @@ This repository is build to organically grow as people contribute to the reposit
 2. For new functions use the function template (FunctionTemplate.m). Make sure you describe the different step you take by comments in your new function.
 3. Finished with your contribution? Make a pull request to the main branch and ask for reviewing by Bram or Wouter. 
 
-### Mandatory packages for using the toolkit
+### Dependencies
 
-As the toolkit develops, different software packages may be needed to be able to use this repository. Here we list the software packages that may be needed in the different folders of the toolkit. We kindly ask, that if you contribute to this repository by adding functions that depend on other software, to complete the overview below by adding: the folder/set of function, the software the functions/folder depends on, a brief summary of why this software is used, and directions for installing the software.
+As the toolkit develops, different software packages may be needed to be able to use this repository. Here we describe dependencies of this repository on other software packages. We kindly ask that if you add functions that depend on other software, that you describe these dependences by completing the overview below. Specify the folder that depends on other software, the software the folder depends on, a brief summary of why this software is used, and directions for installing the software.
 
 **Dataprocessing**
 
