@@ -14,7 +14,7 @@ function [outputArg1,outputArg2] = FunctionName(inputArg1,inputArg2)
 %   -outputArg1-
 %   * description of this output
 %
-%   -inputArg1-
+%   -outputArg2-
 %   * description of this output
 % 
 % Original author: FULL NAME
