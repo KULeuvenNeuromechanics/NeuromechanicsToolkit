@@ -61,9 +61,9 @@ if sum(RowsMissingData) ~= 0
         
         % Correction for empty vectors
         if isempty(i_disappear) && ~isempty(i_appear)
-            i_disappear(1:length(i_disappear)+1,1)    = [1;i_disappear];
+            i_disappear(1:length(i_disappear)+1)    = [1;i_disappear];
         elseif isempty(i_appear) && ~isempty(i_disappear)
-            i_appear(1:length(i_appear)+1,1)          = [i_appear;nrow];
+            i_appear(1:length(i_appear)+1)          = [i_appear;nrow];
         end
         
         % correct for data that is missing at the start or end of the trial
