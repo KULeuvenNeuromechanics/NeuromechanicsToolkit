@@ -32,7 +32,7 @@ end
 [EMG_max_all,~] = max(EMG_max);
 
 for trial = 1:ntrials
-    % normalize the filtered data of each channen to the overall max value
+    % normalize the filtered data of each channel to the overall max value
     EMG_norm{trial} = EMG_filt{trial}./EMG_max_all;   
 end
 
