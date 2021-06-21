@@ -17,7 +17,7 @@ function [muscle_groups] = getMuscleGroups(modelPath,muscleNames)
 %   * nMuscleGroups x nMuscles matrix with '1' if muscle is part of the muscle
 %   group and '0' if not
 % 
-% Original author: Bram Van Den Bosch
+% Original author: Dhruv Gupta, Bram Van Den Bosch
 % Original date: 17/06/2021
 %
 % Last edit by: Bram Van Den Bosch
