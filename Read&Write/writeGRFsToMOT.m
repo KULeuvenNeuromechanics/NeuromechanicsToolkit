@@ -31,10 +31,10 @@ function writeGRFsToMOT(forces1,forces2,cop1,cop2,Ty1,Ty2,FrameRate,outputfilena
 %        nx3 center of pressure data for the left leg
 %
 %   Ty1
-%       torque vector arround the y axis for the right leg
+%       nx3 torque vector for the right leg
 %
 %   Ty2
-%       torque vector arround the y axis for the left leg
+%       nx3 torque vector for the left leg
 % 
 %   FrameRate
 %       sampling frequency forces
@@ -91,7 +91,7 @@ colnames{19} = 'L_ground_torque_z';
 
 % Write time array to data matrix.
 time = (0:1/FrameRate:((nRowst-1)/FrameRate))';
-forceData   = [Forces1(:,1) Forces1(:,2) Forces1(:,3) cop1(:,1) cop1(:,2) cop1(:,3)  Forces2(:,1) Forces2(:,2) Forces2(:,3) cop2(:,1) cop2(:,2) cop2(:,3) zeros(nRowst,1) Ty1 zeros(nRowst,1)  zeros(nRowst,1) Ty2 zeros(nRowst,1) ];
+forceData   = [Forces1 cop1  Forces2 cop2 Ty1 Ty2];
 dataMatrix  = [time forceData];
 
 %%  Open file for writing.
