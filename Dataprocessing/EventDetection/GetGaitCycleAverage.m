@@ -26,6 +26,11 @@ else
     ParamV = nan(100,nc,nstep);
 end
 
+% convert table to array if needed
+if istable(param)
+    param = table2array(param);
+end
+
 
 for i = 1:nstep
     dtStride = hs(i+1)-hs(i);
@@ -33,11 +38,13 @@ for i = 1:nstep
         % select indices of the selected stride
         iSel = (time>=hs(i) & time<=hs(i+1));
         nfr = sum(iSel);
-        % interpolate the data to 100 datapoints
-        if nc == 1
-            ParamV(:,i) = interp1(1:nfr,param(iSel),linspace(1,nfr,100));
-        else
-            ParamV(:,:,i) = interp1(1:nfr,param(iSel,:),linspace(1,nfr,100));
+        if nfr>0
+            % interpolate the data to 100 datapoints
+            if nc == 1
+                ParamV(:,i) = interp1(1:nfr,param(iSel),linspace(1,nfr,100));
+            else
+                ParamV(:,:,i) = interp1((1:nfr)',param(iSel,:),linspace(1,nfr,100)');
+            end
         end
     else
         if BoolPrint

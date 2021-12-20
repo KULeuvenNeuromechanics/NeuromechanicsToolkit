@@ -1,4 +1,4 @@
-function [tDelay] = GetDelay(t1,dat1,t2,dat2,varargin)
+function [nfr_lag,rMax] = GetDelay(t1,dat1,t2,dat2,varargin)
 %GetDelay computes the time delay between two signals using
 %autocorrelations. We expect that dat1 fits more or less inside dat2
 %   input arguments:
@@ -20,12 +20,12 @@ end
 dat1_int= interp1(t1,dat1,t2)';
 
 % run the cross correlation
-[r,lags] = xcorr(dat1_int,dat2);
+[r,lags] = xcorr(dat1_int,dat2');
 
 % find the delay
-[~,IndMax]  = max(r);
+[rMax,IndMax]  = max(r);
 nfr_lag     = lags(IndMax);
-tDelay      = t2(nfr_lag);
+% tDelay      = t2(nfr_lag);
 
 if bool_plot
     disp(['Delay: ' num2str(tDelay) ' s']);
