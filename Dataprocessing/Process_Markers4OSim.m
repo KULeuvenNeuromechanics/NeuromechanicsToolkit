@@ -48,7 +48,7 @@ function [MLabels,Markers,vTime,vFrms,missing_markers] = Process_Markers4OSim(ML
 % Number of frames and markers
 [nvF, ~] = size(Markers);
 
-% throw away dummy markers (name starts with *) for sprint
+% throw away dummy markers (name starts with *)
 indexMLabels    = find(~contains(MLabels,'*'));
 non_dummy       = indexMLabels*3+[-2,-1,0]';
 indexMarkers    = non_dummy(:)';
