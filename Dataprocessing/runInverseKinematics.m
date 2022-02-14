@@ -1,4 +1,4 @@
-function runInverseKinematics(osimModel,IKTemplateFile,TrajectoryFile,IKMotOutputFile)
+function runInverseKinematics(osimModel,IKTemplateFile,TrajectoryFile,IKMotOutputFile,SettingsDir,varargin)
 % --------------------------------------------------------------------------
 % This function runs the Inverse Kinematics tool based on OpenSim API
 % syntax.
@@ -31,7 +31,7 @@ import org.opensim.modeling.*
 % Instantiate InverseKinematicsTool
 ikTool = InverseKinematicsTool(IKTemplateFile);
 
-% Set marker file name
+% Set output
 ikTool.setOutputMotionFileName(IKMotOutputFile);
 
 % extract first and final time from the trajectory file
@@ -50,7 +50,9 @@ ikTool.setMarkerDataFileName(TrajectoryFile);
 
 % Run IKTool
 ikTool.run;
+
 % Print settingsfile
-% ikTool.print(fullfile(SettingsDir,'InverseKinematicsSettings.xml'));
+[~,file_name,file_ext] = fileparts(IKTemplateFile);
+ikTool.print(fullfile(SettingsDir,[file_name,file_ext]));
 
 end
