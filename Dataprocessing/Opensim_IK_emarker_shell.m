@@ -1,8 +1,8 @@
 function Opensim_IK_emarker_shell(osimModel,IKTemplateFile,TrajectoryFile,IKMotOutputFile,SettingsDir,varargin)
 % --------------------------------------------------------------------------
 % This function runs the Inverse Kinematics tool based on OpenSim API
-% syntax. In addition, this function also calculates marker errors per
-% pamerker.
+% syntax. This function provides as shell that makes it possible to
+% calculate individuals marker errors.
 % 
 % INPUT:
 %   osimModel 
@@ -43,7 +43,7 @@ if marker_errors
     end
 end
 
-runInverseKinematics(OSimModel,IKTemplateFile,TrajectoryFile,IKMotOutputFile,SettingsDir)
+runInverseKinematics(osimModel,IKTemplateFile,TrajectoryFile,IKMotOutputFile,SettingsDir)
 
 % report mean error and standard deviations per marker
 if marker_errors

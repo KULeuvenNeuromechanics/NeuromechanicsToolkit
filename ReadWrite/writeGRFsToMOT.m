@@ -91,7 +91,16 @@ colnames{19} = 'L_ground_torque_z';
 
 % Write time array to data matrix.
 time = (0:1/FrameRate:((nRowst-1)/FrameRate))';
-forceData   = [Forces1 cop1  Forces2 cop2 Ty1 Ty2];
+
+% Check for the number of columns Ty1 and Ty2 have. If 1 another 2 columns
+% another two columns are added.
+if size(Ty1,2) == 3
+    forceData   = [Forces1 cop1  Forces2 cop2 Ty1 Ty2];
+elseif size(Ty1,2) == 1
+    forceData   = [Forces1(:,1) Forces1(:,2) Forces1(:,3) cop1(:,1) cop1(:,2) cop1(:,3)  Forces2(:,1) Forces2(:,2) Forces2(:,3) cop2(:,1) cop2(:,2) cop2(:,3) zeros(nRowst,1) Ty1 zeros(nRowst,1)  zeros(nRowst,1) Ty2 zeros(nRowst,1) ];
+else
+    error('Torque matrices dimension incompatible with input into writeGRFsToMOT.')
+end
 dataMatrix  = [time forceData];
 
 %%  Open file for writing.
