@@ -1,4 +1,4 @@
-function runInverseKinematics_emarkers(osimModel,IKTemplateFile,TrajectoryFile,IKMotOutputFile,SettingsDir,varargin)
+function Opensim_IK_emarker_shell(osimModel,IKTemplateFile,TrajectoryFile,IKMotOutputFile,SettingsDir,varargin)
 % --------------------------------------------------------------------------
 % This function runs the Inverse Kinematics tool based on OpenSim API
 % syntax. In addition, this function also calculates marker errors per
@@ -43,35 +43,7 @@ if marker_errors
     end
 end
 
-% import osim libs
-import org.opensim.modeling.*
-
-% Instantiate InverseKinematicsTool
-ikTool = InverseKinematicsTool(IKTemplateFile);
-
-% Set output
-ikTool.setOutputMotionFileName(IKMotOutputFile);
-
-% extract first and final time from the trajectory file
-sto         = Storage(TrajectoryFile);
-starttime   = sto.getFirstTime();
-endtime     = sto.getLastTime();
-% set first and final time for inverse kinematic file
-ikTool.setStartTime(starttime)
-ikTool.setEndTime(endtime)
-
-% Set model
-ikTool.setModel(osimModel);
-
-% Set marker data
-ikTool.setMarkerDataFileName(TrajectoryFile);
-
-% Run IKTool
-ikTool.run;
-
-% Print settingsfile
-[~,file_name,file_ext] = fileparts(IKTemplateFile);
-ikTool.print(fullfile(SettingsDir,[file_name,file_ext]));
+runInverseKinematics(OSimModel,IKTemplateFile,TrajectoryFile,IKMotOutputFile,SettingsDir)
 
 % report mean error and standard deviations per marker
 if marker_errors
