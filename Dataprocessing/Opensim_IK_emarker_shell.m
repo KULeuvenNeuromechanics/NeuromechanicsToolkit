@@ -114,21 +114,26 @@ if marker_errors
     % sort long matrix
     sortmarkers_long = [-2:0]' + ind_long_sort*3;
     data_long        = data_long_temp(:,sortmarkers_long(:));
-    
+        
     % calculate distance between model markers and experimental for each
     % timepoint
     error_markers = (data_long - data_short).^2;
     error_markers_norm = NaN(size(error_markers,1),length(lab_short));
     for i = 1:nmark_short_upd
-        error_markers_norm(:,i) = sqrt(sum(error_markers(:,[0:2]+i),2));
+        error_markers_norm(:,i) = sqrt(sum(error_markers(:,[1:3]+(i-1)*3),2));
     end
     
     % print the mean difference and standard deviation
-    error_mean = mean(error_markers_norm,1);
-    error_std  = std(error_markers_norm,1);
-    fprintf('marker,\t mean,\t std \n')
+    error_mean = mean(error_markers_norm,1,'omitnan');
+    error_std  = std(error_markers_norm,1,'omitnan');
+    [~,isort_error] = sort(error_mean,'descend'); % sort to largest error
+%     isort_error = 1:length(error_mean);
+    error_mean_sort = error_mean(isort_error);
+    error_std_sort  = error_std(isort_error);
+    lab_short_sort  = lab_short(isort_error);
+    fprintf('mean,\t std,\t marker\n')
     for jj = 1:nmark_short_upd
-        fprintf('%s\t %.4f\t %.4f\n',lab_short{jj},error_mean(jj),error_std(jj))
+        fprintf('%.4f\t %.4f\t %s\n',error_mean_sort(jj),error_std_sort(jj),lab_short_sort{jj})
     end
 end
 
