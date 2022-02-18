@@ -1,4 +1,4 @@
-function  []=Opensim_IK( model_dir,input_file,output_settings,output_IK,event,generic_settings_IK,varargin)
+function  []=Opensim_IK(model,input_file,output_settings,output_IK,event,generic_settings_IK,varargin)
 % Opensim_IK Uses API to solve inverse dynamics
 %
 %   INPUT:
@@ -52,9 +52,13 @@ import org.opensim.modeling.*
 ikTool = InverseKinematicsTool(generic_settings_IK);
 
 % use the loaded model
-model=Model(model_dir);
-model.initSystem();     % initialise the model
-ikTool.setModel(model);
+if isa(model,'org.opensim.modeling.Model')
+    ikTool.setModel(osimmodel);
+else
+    osimmodel=Model(model);
+    osimmodel.initSystem();     % initialise the model
+    ikTool.setModel(osimmodel);
+end
 
 % search for the name of the output file
 [~, name, ~]=fileparts(output_IK);

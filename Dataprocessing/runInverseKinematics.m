@@ -42,6 +42,10 @@ endtime     = sto.getLastTime();
 ikTool.setStartTime(starttime)
 ikTool.setEndTime(endtime)
 
+if isa(model,'')
+    
+end
+
 % Set model
 ikTool.setModel(osimModel);
 
