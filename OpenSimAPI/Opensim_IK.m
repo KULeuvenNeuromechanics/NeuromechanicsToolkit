@@ -2,7 +2,7 @@ function  []=Opensim_IK(model,input_file,output_settings,output_IK,event,generic
 % Opensim_IK Uses API to solve inverse dynamics
 %
 %   INPUT:
-%   (1) model_dir=             full filename opsim model 
+%   (1) model=                 full filename osim model or osim model
 %   (2) input_file=            full filename file with marker cordinates (*.trc)
 %   (3) output_settings=       path+name to save the output
 %   (4) output_IK=             path+name of the IK output file
@@ -18,7 +18,10 @@ function  []=Opensim_IK(model,input_file,output_settings,output_IK,event,generic
 %
 %   AUTHOR:
 %   Maarten Afschrift
-
+%
+%   Last edit by: Wouter Muijres
+%   Last edit date: 18/02/2022
+% --------------------------------------------------------------------------
 % variable input arguments: diary
 BoolDiary = 0;
 if ~isempty(varargin)
