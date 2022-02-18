@@ -42,12 +42,12 @@ endtime     = sto.getLastTime();
 ikTool.setStartTime(starttime)
 ikTool.setEndTime(endtime)
 
-if isa(model,'')
-    
-end
-
 % Set model
 ikTool.setModel(osimModel);
+
+% Setup the ikTool for this trial
+[~,name,~] = fileparts(TrajectoryFile);
+ikTool.setName(name);
 
 % Set marker data
 ikTool.setMarkerDataFileName(TrajectoryFile);
