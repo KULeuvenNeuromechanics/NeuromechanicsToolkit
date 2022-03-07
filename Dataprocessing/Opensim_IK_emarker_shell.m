@@ -20,8 +20,10 @@ function Opensim_IK_emarker_shell(osimModel,IKTemplateFile,TrajectoryFile,IKMotO
 %       full path length of the output .mot file.
 %
 %   Variable input argument
+%       Verbose: Output model marker errors to command window
+%       extrainfo: write extra info at the start of the trial in the diary
+%       file.
 %       
-%
 % Original author: Wouter Muijres
 % Original date: 16/02/2022
 %
@@ -29,53 +31,60 @@ function Opensim_IK_emarker_shell(osimModel,IKTemplateFile,TrajectoryFile,IKMotO
 % Last edit date: -
 % --------------------------------------------------------------------------
 
-printdiary    = getarg('printdiary',false,varargin{:});
 verbose       = getarg('verbose',false,varargin{:}); % get verboselevel
 extrainfo     = getarg('extra_trialinfo',[],varargin{:});
 
 % Generate individual marker errors (mean error and standard deviation)
-% Generate file with model markers
+% Change setup file to generate file with model markers
 iksetup = xmlread(IKTemplateFile);
 rep_merk_locs = iksetup.getElementsByTagName('report_marker_locations').item(0).getFirstChild.getNodeValue;
 if strcmp(rep_merk_locs,'false')
     iksetup.getElementsByTagName('report_marker_locations').item(0).getFirstChild.setNodeValue('true');
     xmlwrite(IKTemplateFile,iksetup)
 end
-
+% set directory for model marker/error file
 ikresults_dir = fullfile(fileparts(IKMotOutputFile),'Results');
 if ~isfolder(ikresults_dir)
     mkdir(ikresults_dir);
 end
 
-% print diary if individual_marker_error is printed
-if printdiary
-    [filepath,name] = fileparts(IKMotOutputFile);
-    diary_file      = fullfile(filepath,'diary.txt');
-    
-    if contains(name,'static')
-        fid = fopen(diary_file,'w');
-    else
-        fid = fopen(diary_file,'a+');
-    end
-    % print trial information
-    fprintf(fid,'Trial:\t %s \n',name);
-    
-    % print extra information if available
-    if ~isempty(extrainfo)
-        for k = 1:length(extrainfo)
-            fprintf(fid,'%s \n',extrainfo{k});
-        end
-    end
-    
-    fprintf(fid,'\n\n');
+% print diary individual_marker_error
+[filepath,name] = fileparts(IKMotOutputFile);
+diary_file      = fullfile(filepath,'diary.txt');
+
+% % Change weights of certain markers
+% if ~(contains(name,'ankle') || contains(name,'knee'))
+%     iksetup.getElementsByTagName('IKTaskSet').item(0).getFirstChild.getNodeValue;
+%     IKMarkerTask = iksetup.getElementsByTagName('IKTaskSet').item(0).getElementsByTagName('IKMarkerTask');
+%     weightClav = IKMarkerTask.item(2).getElementsByTagName('weight').item(0).getFirstChild;
+%     weightClav.setNodeValue('5');
+%     weightC7 = IKMarkerTask.item(37).getElementsByTagName('weight').item(0).getFirstChild;
+%     weightC7.setNodeValue('5');
+%     xmlwrite(IKTemplateFile,iksetup);
+% end
+
+% start new file from static file (assume static file is the first file)
+if contains(name,'static')
+    fid = fopen(diary_file,'w');
+else
+    fid = fopen(diary_file,'a+');
 end
 
-% runInverseKinematics(osimModel,IKTemplateFile,TrajectoryFile,IKMotOutputFile,SettingsDir);
+% print trial information
+fprintf(fid,'Trial:\t %s \n',name);
+% print extra information if available
+if ~isempty(extrainfo)
+    for k = 1:length(extrainfo)
+        fprintf(fid,'%s \n',extrainfo{k});
+    end
+end
+fprintf(fid,'\n\n');
+
+% run IK
 Opensim_IK(osimModel,TrajectoryFile,IKTemplateFile,IKMotOutputFile,[],IKTemplateFile,... % variable input arguments
     'printresults',ikresults_dir);
 
 % report mean error and standard deviations per marker
-
 % model marker position file produced by setting
 % report_marker_locations to true in the xml file
 [~, name, ~]=fileparts(IKMotOutputFile);
@@ -171,15 +180,12 @@ if verbose
 end
 
 % conditionally print to file
-if printdiary
-    fprintf(fid,'mean,\t std,\t marker\n');
-    for jj = 1:nmark_short_upd
-        fprintf(fid,'%.4f\t %.4f\t %s\n',error_mean_sort(jj),error_std_sort(jj),lab_short_sort{jj});
-    end
-    fprintf(fid,'\n\n');
-    fclose(fid);
+fprintf(fid,'mean,\t std,\t marker\n');
+for jj = 1:nmark_short_upd
+    fprintf(fid,'%.4f\t %.4f\t %s\n',error_mean_sort(jj),error_std_sort(jj),lab_short_sort{jj});
 end
-
+fprintf(fid,'\n\n');
+fclose(fid);
 end
 
 %% checking variable input list
