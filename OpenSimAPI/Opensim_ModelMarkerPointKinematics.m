@@ -30,11 +30,6 @@ function Opensim_ModelMarkerPointKinematics(osimmodel,events,ikfile,markername,p
 %   Output is saved in the PKfolder under the name specified in prefixname
 %   and markername
 % 
-% Original author: Wouter Muijres
-% Original date: 07/03/2022
-%
-% Last edit by: Wouter Muijres
-% Original date: 07/03/2022
 % --------------------------------------------------------------------------
 
 import org.opensim.modeling.*

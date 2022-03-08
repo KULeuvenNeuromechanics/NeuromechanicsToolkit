@@ -20,11 +20,6 @@ function  []=Opensim_IK(model,input_file,output_settings,output_IK,event,generic
 %   DEPENDENCIES:
 %   (1) you have to install the opensim API to run this function (tested with 4.2)
 %
-%   AUTHOR:
-%   Maarten Afschrift
-%
-%   Last edit by: Wouter Muijres
-%   Last edit date: 18/02/2022
 % --------------------------------------------------------------------------
 % variable input arguments: diary
 NameDiary = getarg('diary',[],varargin{:});

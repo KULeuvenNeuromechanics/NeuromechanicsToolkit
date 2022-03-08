@@ -23,12 +23,7 @@ function Opensim_IK_emarker_shell(osimModel,IKTemplateFile,TrajectoryFile,IKMotO
 %       Verbose: Output model marker errors to command window
 %       extrainfo: write extra info at the start of the trial in the diary
 %       file.
-%       
-% Original author: Wouter Muijres
-% Original date: 16/02/2022
-%
-% Last edit by: -
-% Last edit date: -
+% 
 % --------------------------------------------------------------------------
 
 verbose       = getarg('verbose',false,varargin{:}); % get verboselevel
@@ -51,17 +46,6 @@ end
 % print diary individual_marker_error
 [filepath,name] = fileparts(IKMotOutputFile);
 diary_file      = fullfile(filepath,'diary.txt');
-
-% % Change weights of certain markers
-% if ~(contains(name,'ankle') || contains(name,'knee'))
-%     iksetup.getElementsByTagName('IKTaskSet').item(0).getFirstChild.getNodeValue;
-%     IKMarkerTask = iksetup.getElementsByTagName('IKTaskSet').item(0).getElementsByTagName('IKMarkerTask');
-%     weightClav = IKMarkerTask.item(2).getElementsByTagName('weight').item(0).getFirstChild;
-%     weightClav.setNodeValue('5');
-%     weightC7 = IKMarkerTask.item(37).getElementsByTagName('weight').item(0).getFirstChild;
-%     weightC7.setNodeValue('5');
-%     xmlwrite(IKTemplateFile,iksetup);
-% end
 
 % start new file from static file (assume static file is the first file)
 if contains(name,'static')
@@ -118,10 +102,8 @@ else
     data_short_temp = modelmarker_loc;
     lab_long_temp = marker_labels;
     data_long_temp = marker_loc;
-    
     nmark_short = nmark_model;
 end
-
 ind_long_temp = zeros(1,nmark_short);
 
 % find markers that donot appear in the long marker matrix
@@ -131,7 +113,7 @@ lab_short = lab_short_temp(ind_remove_short_lab);
 ind_lab_short_mat   = [-2:0]'+ind_remove_short_lab*3;
 data_short          = data_short_temp(:,ind_lab_short_mat(:));
 
-% fond the order to sort sucht that the long labels/matrix is the order of
+% find the order to sort such that the long labels/matrix is the order of
 % the short matrix
 nmark_short_upd = length(lab_short);
 i_array_long    = 1;
@@ -139,7 +121,6 @@ for ii = 1:nmark_short_upd
     ind    = find(strcmp(lab_long_temp,lab_short{ii}), 1);
     if isempty(ind)
         i_array_long = i_array_long + 1;
-        continue;
     else
         ind_long_temp(i_array_long) = ind;
         i_array_long = i_array_long + 1;

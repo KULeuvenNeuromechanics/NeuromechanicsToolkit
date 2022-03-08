@@ -1,5 +1,5 @@
 function writeGRFsToMOT(forces1,forces2,cop1,cop2,Ty1,Ty2,FrameRate,outputfilename)
-%
+
 % Input:   GRFTz is a structure containing the following data
 %          tStart is the starting time of the data set
 %          sF is the sampling frequency of the data
@@ -46,13 +46,12 @@ function writeGRFsToMOT(forces1,forces2,cop1,cop2,Ty1,Ty2,FrameRate,outputfilena
 %   []
 %       The file 'outputfilename' is written to the current directory.
 %
-% Original author: ??
-% Original date: DD/MM/YYYY
-%
-% Last edit by: Wouter Muijres 
-% Last edit date: 01/06/2021
+% Original author: ASeth, 01/09/07
+% WMuijres, 28/05/21 clean up:
+%   - erase commented code
+%   - uncomplicate code at some points
+%   - integrate with existing write .mot function of Tim Dorn
 % --------------------------------------------------------------------------
-
 
 % In case of nan values set to 0
 forces1(isnan(forces1)) = 0;
@@ -97,7 +96,8 @@ time = (0:1/FrameRate:((nRowst-1)/FrameRate))';
 if size(Ty1,2) == 3
     forceData   = [Forces1 cop1  Forces2 cop2 Ty1 Ty2];
 elseif size(Ty1,2) == 1
-    forceData   = [Forces1(:,1) Forces1(:,2) Forces1(:,3) cop1(:,1) cop1(:,2) cop1(:,3)  Forces2(:,1) Forces2(:,2) Forces2(:,3) cop2(:,1) cop2(:,2) cop2(:,3) zeros(nRowst,1) Ty1 zeros(nRowst,1)  zeros(nRowst,1) Ty2 zeros(nRowst,1) ];
+    forceData   = [Forces1 cop1 Forces2 cop2 zeros(nRowst,1) Ty1 ...
+        zeros(nRowst,1)  zeros(nRowst,1) Ty2 zeros(nRowst,1) ];
 else
     error('Torque matrices dimension incompatible with input into writeGRFsToMOT.')
 end
