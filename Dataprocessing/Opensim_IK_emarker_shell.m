@@ -95,7 +95,6 @@ if nmark_model >= nmark_data
     data_short_temp = marker_loc;
     lab_long_temp = modelmarker_labels_new;
     data_long_temp = modelmarker_loc;
-    
     nmark_short = nmark_data;
 else
     lab_short_temp = modelmarker_labels_new;
