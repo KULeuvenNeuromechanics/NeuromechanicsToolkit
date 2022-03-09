@@ -31,9 +31,6 @@ function err = writeMarkersToTRC(trcfile, Markers, MLabels, Rate, Frames, Time, 
 % 
 % Original author: A. Seth (Stanford University)
 % Original date: 01/10/07
-%
-% Last edit by: Wouter Muijres 
-% Last edit date: 01/06/2021
 % --------------------------------------------------------------------------
 err = 0;
 [nvF, nc] = size(Markers);

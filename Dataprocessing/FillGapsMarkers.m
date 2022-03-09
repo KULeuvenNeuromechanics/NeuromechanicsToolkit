@@ -61,19 +61,19 @@ if sum(RowsMissingData) ~= 0
         
         % Correction for empty vectors
         if isempty(i_disappear) && ~isempty(i_appear)
-            i_disappear(1:length(i_disappear)+1)    = [1;i_disappear];
+            i_disappear(1:length(i_disappear)+1,1)    = [1;i_disappear];
         elseif isempty(i_appear) && ~isempty(i_disappear)
-            i_appear(1:length(i_appear)+1)          = [i_appear;nrow];
+            i_appear(1:length(i_appear)+1,1)          = [i_appear;nrow];
         end
         
         % correct for data that is missing at the start or end of the trial
         if i_appear(1)<i_disappear(1) 
-            i_disappear(1:length(i_disappear)+1)    = [1;i_disappear];
+            i_disappear(1:length(i_disappear)+1,1)    = [1;i_disappear];
         end
         if i_appear(end)<i_disappear(end) 
-            i_appear(1:length(i_appear)+1)          = [i_appear;nrow];
+            i_appear(1:length(i_appear)+1,1)          = [i_appear;nrow];
         end    
-        
+
         gapsize     = (i_appear - i_disappear)+1; % gap sizes
         gap_replace = find(gapsize > gaplim); % replace gaps larger than the gaplimit threshold
         % Loop over gaps larger than the threshold

@@ -35,8 +35,7 @@ function [ForcePlateData] = Process_GRF(AnalogSignals,threshold,grf_filter,Analo
 % Original date: ??
 %
 % Last editted by: 
-% Wouter Muijres 26/05/2021 streamlined the loop and structured outputs in
-% a loop.
+% Wouter Muijres 26/05/2021 streamlined the loop and structured outputs
 %  
 % --------------------------------------------------------------------------
 
