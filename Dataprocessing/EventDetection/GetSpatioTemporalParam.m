@@ -11,19 +11,26 @@ function [Event,Step] = GetSpatioTemporalParam(time,Fl,Fr,treshold,dtOffPlate,va
 %       (1): Time (in s) of data that is excluded at the start in the
 %       analayis (this is the time relative to the first time frame in
 %       vector "time").
+%       (2): Select side for computation Step information ('R' for right and
+%       'L' for left side). Default is based on left ground reaction forces
 
 
 % note we added the dtOffPlate because we don't want to detect events when
 % the force fluctuates around the treshold
 
 % check if we have to exlude some frames in the start of the trial
-if ~isempty(varargin)
+if ~isempty(varargin) && ~isempty(varargin{1})
    t0 = varargin{1}; 
    tRel =  time - time(1);
    iSel = tRel>t0;
    time = time(iSel);
    Fl = Fl(iSel);
    Fr = Fr(iSel);    
+end
+
+Side = 'L';
+if length(varargin)>1
+    Side = varargin{2};
 end
 
 % get sampling frequency
@@ -41,26 +48,44 @@ Step.StrideFreq = 1./Step.StrideTime;
 Step.StrideFreq_mean = nanmean(Step.StrideFreq);
 Step.StrideFreq_std = nanstd(Step.StrideFreq);
 
-% select the percentage in stance and swing (based on left leg) for the
+% select the percentage in stance and swing (based on left or right leg) for the
 % whole trial
-nfr = length(Fl);
-Step.PercStance = sum(Fl > treshold)./nfr * 100;
-Step.PercSwing = sum(Fl < treshold)./nfr * 100; 
-Step.PercDS = sum(Fl > treshold & Fr > treshold)./nfr * 100;
+if strcmp(Side,'L')
+    Fs = Fl;
+    hs_sel = Event.ths_l;
+    to_sel = Event.tto_l;
+    hsi = hs_l;
+elseif strcmp(Side,'R')
+    Fs = Fr;
+    hs_sel = Event.ths_r;
+    to_sel = Event.tto_r;
+    hsi = hs_r;
+else
+    disp(['Computation Step information based on left side because input ' Side ' is unknown']);
+    Fs = Fl;
+    hs_sel = Event.ths_l;
+    to_sel = Event.tto_l;
+    hsi = hs_l;
+end
+
+nfr = length(Fs);
+Step.PercStance = sum(Fs > treshold)./nfr * 100;
+Step.PercSwing = sum(Fs < treshold)./nfr * 100; 
+Step.PercDS = sum(Fs > treshold & Fr > treshold)./nfr * 100;
 
 % select duration stance and swing phase for each step
-nstep = length(Event.ths_l)-1;
+nstep = length(hs_sel)-1;
 dtStance = nan(nstep,1);
 PercDS = nan(nstep,1);
-dtStride = diff(Event.ths_l);
+dtStride = diff(hs_sel);
 for i = 1:nstep    
     % get the duration of the stance phase
-    ito = find(Event.tto_l>Event.ths_l(i),1,'first'); % get the first toe-off after heelstrike
-    tto = Event.tto_l(ito);
-    dtStance(i) = tto-Event.ths_l(i);    
+    ito = find(to_sel>hs_sel(i),1,'first'); % get the first toe-off after heelstrike
+    tto = to_sel(ito);
+    dtStance(i) = tto-hs_sel(i);    
     % get the duration of the double support fase
-    iSel = hs_l(i):hs_l(i+1); % get indexes of this stride
-    PercDS(i) = sum(Fl(iSel) > treshold & Fr(iSel) > treshold)./length(iSel) * 100;
+    iSel = hsi(i):hsi(i+1); % get indexes of this stride
+    PercDS(i) = sum(Fs(iSel) > treshold & Fr(iSel) > treshold)./length(iSel) * 100;
 end
 if any(size(dtStance) ~= size(dtStride))
     dtStride = dtStride';

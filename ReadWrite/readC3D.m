@@ -362,25 +362,26 @@ fclose(fid);
 
 
 I = 1; J = 1;
-while ~strcmp(ParameterGroup(I).name, 'POINT');
+while ~strcmp(ParameterGroup(I).name, 'POINT')
     I = I+1;
 end
 
-while ~strcmp(ParameterGroup(I).Parameter(J).name, 'LABELS');
-    J = J+1;
+% get the headers for marker data
+Headers = [ParameterGroup(I).Parameter().name];
+iLabels = strcmp(Headers,'LABELS');
+if sum(iLabels)>0
+    MLabels = ParameterGroup(I).Parameter(iLabels).data;
+else
+    MLabels = [];
 end
-
-
-MLabels = ParameterGroup(I).Parameter(J).data;
-
 
 % Get details about analog data
 I = 1; J = 1;
-while ~strcmp(ParameterGroup(I).name, 'ANALOG');
+while ~strcmp(ParameterGroup(I).name, 'ANALOG')
     I = I+1;
 end
 
-for J = 1:length(ParameterGroup(I).Parameter),
+for J = 1:length(ParameterGroup(I).Parameter)
     category = upper(ParameterGroup(I).Parameter(J).name);
     switch category{1}
         case 'GEN_SCALE'
@@ -397,17 +398,17 @@ for J = 1:length(ParameterGroup(I).Parameter),
 end
 % number of analog frames and individual signals
 [nAF, nAS] = size(AnalogSignals);
+
 % Apply the appropriate scaling and offsets to convert analog voltage to
 % appropriate units
-
-if nAS,
+if nAS
     offsets = offsets(1:nAS);
     scales = scales(1:nAS);
     AnalogSignals = (AnalogSignals-ones(nAF, 1)*offsets').*(ones(nAF, 1)*scales')*gen_scale;
 end
 
-if nargin > 2,
-    if ~isempty(varargin{2}),
+if nargin > 2
+    if ~isempty(varargin{2})
         offInds = varargin{2};
         offSignals = AnalogSignals(:,offInds);
         % super smooth and rectify the data
