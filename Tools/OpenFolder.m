@@ -1,6 +1,9 @@
 function [] = OpenFolder(varargin)
-%UNTITLED2 Summary of this function goes here
-%   Detailed explanation goes here
+%OpenFolder Opens specific folder in explorer. Opens current folder in
+%matlab when used without input arguments
+%   Input arguments:
+%       (1) varargin:
+%           (1.1) Path to folder
 
 if ~isempty(varargin);
     startpath=pwd;
