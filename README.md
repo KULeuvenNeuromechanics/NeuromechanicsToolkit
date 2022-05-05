@@ -32,3 +32,7 @@ As the toolkit develops, different software packages may be needed to be able to
 - Software: OpenSim MATLAB API
 
 - For information on setting up the MATLAB API see: https://simtk-confluence.stanford.edu/display/OpenSim/Scripting+with+Matlab
+
+### Notes
+
+Lab users typically want to use this repository inside their current project. It is good practice to include this repository as a submodule. More information on submodules here: https://git-scm.com/book/nl/v2/Git-Tools-Submodules.
