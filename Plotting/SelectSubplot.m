@@ -1,6 +1,9 @@
 function [fNew,hNew] = SelectSubplot(iAx,varargin)
-%UNTITLED2 Summary of this function goes here
-%   Detailed explanation goes here
+%SelectSubplot Selects current subplot in figure with mutiple panes
+%   Input arguments:
+%       (1) iAx: handle for current axis
+%       (2) varargin:
+%           (2.1) handle current figure
 if ~isempty(varargin)
     h = varargin{1};
 else

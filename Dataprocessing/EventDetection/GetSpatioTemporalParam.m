@@ -1,18 +1,27 @@
 function [Event,Step] = GetSpatioTemporalParam(time,Fl,Fr,treshold,dtOffPlate,varargin)
-%UNTITLED4 Summary of this function goes here
-%   Detailed explanation goes here
-% input arguments
-%   time: time vector in s
-%   Fl: vertical ground reaction force left leg
-%   F2: vertical ground reaction force right leg
-%   treshold: treshold in N for event detection (default 30 N?)
-%   dtOffPlate: minimal duration swing phase for event detection
+%GetSpatioTemporalParam Computes spatio-temporal parameters from left and
+%right ground reaction forces
+% input arguments:
+%   (1) time: time vector in s
+%   (2) Fl: vertical ground reaction force left leg
+%   (3) Fr: vertical ground reaction force right leg
+%   (4) treshold: treshold in N for event detection (default 30 N?)
+%   (5) dtOffPlate: minimal duration swing phase for event detection
 %   varargin:
-%       (1): Time (in s) of data that is excluded at the start in the
+%       (5.1): Time (in s) of data that is excluded at the start in the
 %       analayis (this is the time relative to the first time frame in
 %       vector "time").
-%       (2): Select side for computation Step information ('R' for right and
+%       (5.2): Select side for computation Step information ('R' for right and
 %       'L' for left side). Default is based on left ground reaction forces
+%   Output arguments:
+%   (1) Event: structure with gait cycle events
+%           Event.ths_l : left heelstrike
+%           Event.tto_l : left toe-off
+%           Event.ths_l : right heelstrike
+%           Event.tto_r : right toe-off
+%   (2) Step: structure with temporal information 
+%           Step.StrideTime = duration stride 
+%           Step.StrideFreq = stride frequency
 
 
 % note we added the dtOffPlate because we don't want to detect events when

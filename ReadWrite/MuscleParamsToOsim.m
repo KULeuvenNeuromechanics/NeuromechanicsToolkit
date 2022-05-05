@@ -1,4 +1,4 @@
-function ParamsToOsim(muscleParams,muscleNames,modelPath,outPath,newModelFile)
+function MuscleParamsToOsim(muscleParams,muscleNames,modelPath,outPath,newModelFile)
 %---------------------------------------------------------------------------
 %ParamsToOsim
 %   This function writes muscle parameters to a new osim model, based on a

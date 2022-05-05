@@ -9,6 +9,8 @@ function [lowEMG] = FilterEMG(rawEMG,sf,varargin)
 %                   Filter.Band.cutoff = [20 400]
 %                   Filter.Low.order = 2
 %                   Filter.Low.cutoff = 15
+%   Output arguments:
+%       (1) low pass filtered EMG
 
 % default settings filter
 if isempty(varargin)
