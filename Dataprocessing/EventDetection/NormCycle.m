@@ -74,13 +74,13 @@ for i = 1:nstep
 end
 
 if nc == 1
-    DatMean = nanmean(ParamV,2);
-    DatSTD  = nanstd(ParamV,[],2);
-    DatMedian = nanmedian(ParamV,2);
+    DatMean = nanmean(dataV,2);
+    DatSTD  = nanstd(dataV,[],2);
+    DatMedian = nanmedian(dataV,2);
 else
-    DatMean = nanmean(ParamV,3);
-    DatSTD  = nanstd(ParamV,[],3);
-    DatMedian = nanmedian(ParamV,3);
+    DatMean = nanmean(dataV,3);
+    DatSTD  = nanstd(dataV,[],3);
+    DatMedian = nanmedian(dataV,3);
 end
 
 
