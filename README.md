@@ -36,3 +36,9 @@ As the toolkit develops, different software packages may be needed to be able to
 ### Notes
 
 Lab users typically want to use this repository inside their current project. It is good practice to include this repository as a submodule. More information on submodules here: https://git-scm.com/book/nl/v2/Git-Tools-Submodules.
+
+### Disclaimer
+
+This repository was created by members of the Human Movement Biomechanics Group and was made for internal use only. The repository is a collection of function used in the research group for research purposes. Function have either been constructed outside the group (part of OpenSim workflow), and may have been adapted, or have been constructed by (former) group members.
+
+In no event shall the Human movement Biomechanics Group at the KULeuven be liable for any special, direct, indirect, consequential, or incidental damages or any damages whatsoever, whether in an action of contract, negligence or other tort, arising out of or in connection with the use/content of the NeuromechanicsToolkit repository. 
