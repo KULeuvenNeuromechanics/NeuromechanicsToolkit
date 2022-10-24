@@ -5,8 +5,11 @@ function [whole_body_L,data_out,headers,time,bodymass] = OpenSim_get_angular_mom
 %
 %   Input Arguments:
 %       -1. model_path => path to the musculoskeletal model
-%       -2. ik_filepath => path to the file with the kinematics
-%       -3. results_path => path to the results
+%       -2. BodyKin => datastructure with bodykinematics results
+%       	BodyKin.Pos: segment position information
+%       	BodyKin.Vel: segment velocity information
+%       	BodyKin.Acc: segment acceleration information
+%       	BodyKin.header: colheaders
 %
 %   Output Arguments:
 %       -1. whole_body_L => whole body angular momentum (x,y,z)
@@ -69,10 +72,17 @@ for i=0:nbodies-1
 
     % get the inertia tensor
     I_osim_Mom = bodies.get(i).getInertia().getMoments;
+    I_osim_Prod = bodies.get(i).getInertia().getProducts;
     I=zeros(3,3);
     I(1,1)=I_osim_Mom.get(0);
     I(2,2)=I_osim_Mom.get(1);
     I(3,3)=I_osim_Mom.get(2);
+    I(2,1)=-I_osim_Prod.get(0);
+    I(1,2)=-I_osim_Prod.get(0);
+    I(1,3)=-I_osim_Prod.get(1);
+    I(3,1)=-I_osim_Prod.get(1);
+    I(3,2)=-I_osim_Prod.get(2);
+    I(2,3)=-I_osim_Prod.get(2);
 
     % compute the angular momentum
     for t=1:length(time)
