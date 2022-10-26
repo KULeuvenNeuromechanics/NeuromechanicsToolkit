@@ -1,4 +1,4 @@
-function [whole_body_L,data_out,headers,time,bodymass] = OpenSim_get_angular_momentum_from_body_kin_new(model_path,BodyKin)
+function [whole_body_L,data_out,headers,time,bodymass] = OpenSim_get_angular_momentum_from_body_kin(model_path,BodyKin)
 % OPENSIM_GET_ANGULAR_MOMENTUM Computes the angular momentum for each
 % segment based on a OpenSim model and his kinematics (based on paper Herr
 % et al. 2008, Control of angular momentum during walking)
