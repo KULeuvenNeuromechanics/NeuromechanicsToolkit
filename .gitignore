@@ -1,0 +1,8 @@
+# ignore OpenSim files
+*.log
+*.sto
+*.trc
+*.mot
+*.osim
+*.sto
+

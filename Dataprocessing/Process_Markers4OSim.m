@@ -56,7 +56,7 @@ Markers = Markers(:, indexMarkers);
 MLabels = MLabels(indexMLabels);
 
 % number of markers
-vFrms = 1:nvF;
+vFrms = (1:nvF)';
 vTime = (1/VideoFrameRate*(vFrms-1));
 
 %set missing frames to NaN;
