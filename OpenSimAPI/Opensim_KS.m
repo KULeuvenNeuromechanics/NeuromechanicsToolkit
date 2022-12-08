@@ -15,6 +15,8 @@ function  []=Opensim_KS(model,input_file,output_settings,output_KS,event,generic
 %       (1) diary: generates a file with the command window output.
 %       (2) printresults: generates .sto files with error and model marker
 %       locations.
+%       (3) echo_cmd: defines if you want the cmd input shown in the MATLAB
+%       command window or not. Default is that this output is suppressed.
 %
 %   OUTPUT:
 %
@@ -43,6 +45,8 @@ else
 end
 
 DirResults = getarg('printresults',[],varargin{:});
+
+bool_echo = getarg('echo_cmd',0,varargin{:});
 
 % test if we have to create the output folders
 [OutPath,~,~] = fileparts(output_settings);
@@ -105,7 +109,11 @@ settings.print(output_settings);
 [dir,name,ext] = fileparts(output_settings);
 
 cmd = ['cd "', dir, '" && KS -S ', name,ext];
-system(cmd);
+if bool_echo
+    system(cmd);
+else
+    [status,cmdout] = system(cmd);
+end
 
 if BoolDiary
     diary off
