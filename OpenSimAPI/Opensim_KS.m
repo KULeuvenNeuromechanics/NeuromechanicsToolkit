@@ -1,6 +1,6 @@
 function  []=Opensim_KS(model,input_file,output_settings,output_KS,event,generic_settings_KS,varargin)
-% Opensim_KS uses the OpenSim API to generate the KS setup file and runs KS 
-% through the command line
+% Opensim_KS Uses API to generate the KS setup file and runs KS through the
+% command line
 %
 %   INPUT:
 %   (1) model=                 full filename osim model or osim model
@@ -13,25 +13,32 @@ function  []=Opensim_KS(model,input_file,output_settings,output_KS,event,generic
 %   (6) generic_settings_KS=   path+name generic KS settings file (.xml file)
 %   (7) varargin (in arbitrary order):
 %       (1) diary: generates a file with the command window output.
-%       (2) printresults: generates .sto files with error and model marker
-%       locations.
-%       (3) echo_cmd: defines if you want the cmd input shown in the MATLAB
-%       command window or not. Default is that this output is suppressed.
+%       (2) printresults: defines the directory where the outputs should be
+%       stored. String, default is [].
+%       (3) echo_cmd: shows the KS cmd in the matlab command windos.
+%       Boolean, default is 0.
+%       (4) marker_locations: generates a .sto file containing the marker
+%       locations. Boolean, default is 0.
 %
 %   OUTPUT:
+%   (1) files related to OpenSim inverse kinematics
+%       (1) .mot: results of KS
+%       (2) .xml: setup file 
+%       (3) _ks_marker_error.sto: nTimex3 with marker error (depending on generic setup file)
+%       (4) _ks_model_marker_locations.sto: all marker locations (depending on input 7,4)
 %
 %   DEPENDENCIES:
 %   (1) you have to install the opensim API to run this function (tested with 4.3)
-%   (2) you have to install the KS, see https://simtk.org/projects/kalmanforik
 %
-% This script is based on the function Opensim_IK.m, originally by Maarten
-% Afschrift
-%
+% This script is basesd on the function Opensim_IK.m
 % Original author: Bram Van Den Bosch 
 % Original date: 06/12/2022
+%
+% Last edit by: Bram Van Den Bosch 
+% Last edit date: 27/01/2023
 % --------------------------------------------------------------------------
 
-% variable input arguments: diary
+% variable input arguments
 NameDiary = getarg('diary',[],varargin{:});
 if ~isempty(NameDiary)
     BoolDiary = 1;
@@ -45,8 +52,8 @@ else
 end
 
 DirResults = getarg('printresults',[],varargin{:});
-
 bool_echo = getarg('echo_cmd',0,varargin{:});
+bool_marker_locations = getarg('marker_locations',0,varargin{:});
 
 % test if we have to create the output folders
 [OutPath,~,~] = fileparts(output_settings);
@@ -70,9 +77,7 @@ settings = InverseKinematicsTool(generic_settings_KS);
 if isa(model,'org.opensim.modeling.Model')
     settings.setModel(model);
 else
-    osimmodel=Model(model);
-    osimmodel.initSystem();     % initialise the model
-    settings.setModel(osimmodel);
+    settings.set_model_file(model);
 end
 
 % search for the name of the output file
@@ -101,6 +106,9 @@ settings.setOutputMotionFileName(output_KS);
 if ~isempty(DirResults)
     settings.setResultsDir(DirResults);
 end
+
+% report the marker locations
+settings.set_report_marker_locations(bool_marker_locations);
 
 % Save the settings in a setup file
 settings.print(output_settings);
