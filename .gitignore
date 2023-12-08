@@ -6,3 +6,6 @@
 *.osim
 *.sto
 
+# igone temporary MATLAB files
+*.asv
+
