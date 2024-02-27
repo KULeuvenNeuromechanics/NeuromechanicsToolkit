@@ -33,8 +33,9 @@ model.initSystem();
 iksto = Storage(ikfile);
 default_event = [iksto.getFirstTime,iksto.getLastTime];
 dt = diff(default_event)/iksto.getSize;
+fs = round(1/dt);
 event = getarg('event',default_event,varargin);
-ntpoints = diff(event)/dt;
+ntpoints = diff(event)*fs;
 
 % get body names
 bodyset = model.getBodySet;
